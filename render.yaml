@@ -1,22 +1,12 @@
 services:
   - type: web
     name: hrms-api
-    runtime: python
-    pythonVersion: 3.11
-    
+    env: python
+    plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
-    
     envVars:
       - key: DATABASE_URL
-        scope: build,runtime
-        sync: false
+        value: sqlite:///./hrms.db
       - key: PYTHONUNBUFFERED
         value: true
-      - key: ENVIRONMENT
-        value: production
-    
-    disk:
-      name: hrms-data
-      mountPath: /var/data
-      sizeGB: 1
